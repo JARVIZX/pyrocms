@@ -84,6 +84,12 @@ class Plugin_Navigation extends Plugin
 						'default' => 'current',
 						'required' => false,
 					),
+					'class_children' => array(
+						'type' => 'text',
+						'flags' => '',
+						'default' => 'current_children',
+						'required' => false,
+					),
 					'first_class' => array(
 						'type' => 'text',
 						'flags' => '',
@@ -185,6 +191,7 @@ class Plugin_Navigation extends Plugin
 		$link_class     = $this->attribute('link_class', '');
 		$more_class     = $this->attribute('more_class', 'has_children');
 		$current_class  = $this->attribute('class', 'current');
+		$current_class_children = $this->attribute('class_children', 'current_children');
 		$first_class    = $this->attribute('first_class', 'first');
 		$last_class     = $this->attribute('last_class', 'last');
 		$dropdown_class = $this->attribute('dropdown_class', 'dropdown');
@@ -290,12 +297,12 @@ class Plugin_Navigation extends Plugin
 				(is_string($wrapper['children']) and strpos($wrapper['children'], $current_link)))
 			) {
 				// that means that this link is a parent
-				$wrapper['class'][] = 'has_'.$current_class;
+				$wrapper['class'][] = $current_class_children;
 			}
 			// if we are viewing something in a module (such as a blog post) that doesn't have a link then mark the link
 			// to the module root with .has_current but not if it will already have .current
 			elseif ($link->module_name === $this->module and ! preg_match('@^'.current_url().'/?$@', $link->url)) {
-				$wrapper['class'][] = 'has_'.$current_class;
+				$wrapper['class'][] = $current_class_children;
 			}
 
 			++$i;
